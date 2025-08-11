@@ -1,38 +1,13 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { tasksApi, categoriesApi, contextApi } from './api'
+import { Task, Category, ContextEntry, CreateTaskDto } from './types'
 
-export interface Task {
-  id: number
-  title: string
-  description: string
-  category?: number
-  category_name?: string
-  priority_score: number
-  deadline?: string
-  status: 'Pending' | 'In Progress' | 'Done'
-  created_at: string
-  updated_at: string
-  // Computed properties for easier use
+// Additional computed properties for tasks
+interface TaskWithComputed extends Task {
   completed: boolean
-  priority: 'low' | 'medium' | 'high'
+  priority: 'high' | 'medium' | 'low'
   dueDate?: string
-}
-
-export interface Category {
-  id: number
-  name: string
-  usage_count: number
-  color?: string
-  description?: string
-}
-
-export interface ContextEntry {
-  id: number
-  content: string
-  source_type: 'WhatsApp' | 'Email' | 'Notes'
-  processed_insights?: any
-  created_at: string
 }
 
 export interface Stats {
@@ -44,11 +19,11 @@ export interface Stats {
 
 interface AppState {
   // Tasks
-  tasks: Task[]
+  tasks: TaskWithComputed[]
   isLoadingTasks: boolean
-  setTasks: (tasks: Task[]) => void
-  addTask: (taskData: any) => Promise<Task>
-  updateTask: (id: number, task: Partial<Task>) => Promise<Task>
+  setTasks: (tasks: TaskWithComputed[]) => void
+  addTask: (taskData: CreateTaskDto) => Promise<TaskWithComputed>
+  updateTask: (id: number, task: Partial<Task>) => Promise<TaskWithComputed>
   deleteTask: (id: number) => Promise<void>
   setLoadingTasks: (loading: boolean) => void
   fetchTasks: () => Promise<void>
@@ -88,11 +63,11 @@ interface AppState {
 }
 
 // Helper function to transform API task to our Task interface
-const transformTask = (apiTask: any): Task => ({
+const transformTask = (apiTask: Task): TaskWithComputed => ({
   ...apiTask,
-  completed: apiTask.status === 'Done',
+  completed: apiTask.status === 'Completed',
   priority: apiTask.priority_score > 7 ? 'high' : apiTask.priority_score > 4 ? 'medium' : 'low',
-  dueDate: apiTask.deadline
+  dueDate: apiTask.deadline || undefined
 })
 
 export const useAppStore = create<AppState>()(
@@ -123,7 +98,13 @@ export const useAppStore = create<AppState>()(
       },
       updateTask: async (id, updatedData) => {
         try {
-          const response = await tasksApi.update(id, updatedData)
+          // Transform the data to match CreateTaskDto format
+          const updatePayload: Partial<CreateTaskDto> = {
+            ...updatedData,
+            deadline: updatedData.deadline || undefined, // Convert null to undefined
+          }
+          
+          const response = await tasksApi.update(id, updatePayload)
           const updatedTask = transformTask(response.data)
           set((state) => ({
             tasks: state.tasks.map((task) =>
@@ -172,12 +153,11 @@ export const useAppStore = create<AppState>()(
       toggleTask: async (id) => {
         const task = get().tasks.find(t => t.id === id)
         if (task) {
-          const newStatus = task.status === 'Done' ? 'Pending' : 'Done'
+          const newStatus = task.status === 'Completed' ? 'Pending' : 'Completed'
           try {
             await tasksApi.update(id, { status: newStatus })
             get().updateTask(id, { 
               status: newStatus,
-              completed: newStatus === 'Done'
             })
           } catch (error) {
             console.error('Failed to toggle task:', error)

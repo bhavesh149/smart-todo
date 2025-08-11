@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { Task, Category, useAppStore } from '@/lib/store'
+import { Task, Category } from '@/lib/types'
+import { useAppStore } from '@/lib/store'
 import {
   Dialog,
   DialogContent,
@@ -79,7 +80,7 @@ export function EditTaskDialog({ task }: EditTaskDialogProps) {
         <DialogHeader>
           <DialogTitle>Edit Task</DialogTitle>
           <DialogDescription>
-            Make changes to your task. Click save when you're done.
+            Make changes to your task. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>

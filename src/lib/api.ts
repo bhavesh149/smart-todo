@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { Task, Category, ContextEntry } from './store'
+import type { Task, Category, ContextEntry, CreateTaskDto, PaginatedResponse } from './types'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://127.0.0.1:8001/api'
 
@@ -36,16 +36,6 @@ api.interceptors.response.use(
     throw error
   }
 )
-
-export interface CreateTaskData {
-  title: string
-  description: string
-  category?: number
-  priority_score: number
-  deadline?: string
-  status?: string
-  enhance_with_ai?: boolean
-}
 
 export interface CreateCategoryData {
   name: string
@@ -106,22 +96,22 @@ export interface Stats {
 
 // Task API
 export const tasksApi = {
-  getAll: () => api.get<TasksResponse>('/tasks/'),
+  getAll: () => api.get<PaginatedResponse<Task>>('/tasks/'),
   getById: (id: number) => api.get<Task>(`/tasks/${id}/`),
-  create: (data: CreateTaskData) => api.post<Task>('/tasks/', data),
-  update: (id: number, data: Partial<CreateTaskData>) => api.put<Task>(`/tasks/${id}/`, data),
+  create: (data: CreateTaskDto) => api.post<Task>('/tasks/', data),
+  update: (id: number, data: Partial<CreateTaskDto>) => api.put<Task>(`/tasks/${id}/`, data),
   delete: (id: number) => api.delete(`/tasks/${id}/`),
 }
 
 // Category API
 export const categoriesApi = {
-  getAll: () => api.get<CategoriesResponse>('/categories/'),
+  getAll: () => api.get<PaginatedResponse<Category>>('/categories/'),
   create: (data: CreateCategoryData) => api.post<Category>('/categories/', data),
 }
 
 // Context API
 export const contextApi = {
-  getAll: () => api.get<ContextResponse>('/context/'),
+  getAll: () => api.get<PaginatedResponse<ContextEntry>>('/context/'),
   create: (data: CreateContextData) => api.post<ContextEntry>('/context/', data),
 }
 

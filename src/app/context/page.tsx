@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import { useAppStore } from "@/lib/store"
+import { ProcessedInsights } from "@/lib/types"
 
 const contextTypes = [
   { value: 'WhatsApp', label: 'WhatsApp', icon: MessageCircle },
@@ -35,12 +36,13 @@ export default function ContextPage() {
   }, [fetchContextEntries])
 
   // Function to render processed insights in a user-friendly format
-  const renderProcessedInsights = (insights: any) => {
+  const renderProcessedInsights = (insights: ProcessedInsights | string | unknown) => {
     if (typeof insights === 'string') {
       return insights
     }
 
     if (typeof insights === 'object' && insights !== null) {
+      const insightsObj = insights as ProcessedInsights
       const {
         keywords,
         action_verbs,
@@ -49,7 +51,7 @@ export default function ContextPage() {
         time_references,
         urgency_indicators,
         ...other
-      } = insights
+      } = insightsObj
 
       return (
         <div className="space-y-3">
@@ -155,7 +157,7 @@ export default function ContextPage() {
     try {
       await addContextEntry({
         content,
-        source_type: sourceType as any,
+        source_type: sourceType as 'WhatsApp' | 'Email' | 'Notes',
       })
       
       toast.success('Context entry added successfully!')

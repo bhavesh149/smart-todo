@@ -1,9 +1,8 @@
 "use client"
 
 import { useEffect } from "react"
-import { Plus, CheckSquare, Clock, AlertCircle, TrendingUp } from "lucide-react"
+import { Plus, CheckSquare, Clock, AlertCircle, Calendar, BarChart3, TrendingUp } from "lucide-react"
 import Link from "next/link"
-import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -19,8 +18,6 @@ export default function Dashboard() {
     isLoadingTasks,
     fetchTasks,
     fetchCategories,
-    toggleTask,
-    deleteTask
   } = useAppStore()
 
   useEffect(() => {
@@ -39,26 +36,6 @@ export default function Dashboard() {
   const recentTasks = tasks.slice(0, 5)
   const urgentTasks = tasks.filter(task => task.priority === 'high' && !task.completed).slice(0, 3)
 
-  const handleToggleTask = async (taskId: number) => {
-    try {
-      await toggleTask(taskId)
-      toast.success('Task status updated!')
-    } catch (error) {
-      console.error('Failed to toggle task:', error)
-      toast.error('Failed to update task status. Please try again.')
-    }
-  }
-
-  const handleDeleteTask = async (taskId: number) => {
-    try {
-      await deleteTask(taskId)
-      toast.success('Task deleted successfully!')
-    } catch (error) {
-      console.error('Failed to delete task:', error)
-      toast.error('Failed to delete task. Please try again.')
-    }
-  }
-
   return (
     <div className="container mx-auto px-4 py-8 space-y-8">
       {/* Header */}
@@ -66,7 +43,7 @@ export default function Dashboard() {
         <div>
           <h1 className="text-3xl font-bold">Dashboard</h1>
           <p className="text-muted-foreground">
-            Welcome back! Here's your task overview.
+            Welcome back! Here&apos;s your task overview.
           </p>
         </div>
         <Button asChild size="lg">
