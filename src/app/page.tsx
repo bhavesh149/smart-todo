@@ -1,103 +1,284 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import { useEffect } from "react"
+import { Plus, CheckSquare, Clock, AlertCircle, TrendingUp } from "lucide-react"
+import Link from "next/link"
+import { toast } from "sonner"
+
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { useAppStore } from "@/lib/store"
+import { cn } from "@/lib/utils"
+import { EditTaskDialog } from "@/components/EditTaskDialog"
+
+export default function Dashboard() {
+  const {
+    tasks,
+    categories,
+    isLoadingTasks,
+    fetchTasks,
+    fetchCategories,
+    toggleTask,
+    deleteTask
+  } = useAppStore()
+
+  useEffect(() => {
+    fetchTasks()
+    fetchCategories()
+  }, [fetchTasks, fetchCategories])
+
+  // Calculate real-time stats from tasks data
+  const stats = {
+    total: tasks.length,
+    completed: tasks.filter(task => task.completed).length,
+    pending: tasks.filter(task => !task.completed).length,
+    highPriority: tasks.filter(task => task.priority === 'high' && !task.completed).length,
+  }
+
+  const recentTasks = tasks.slice(0, 5)
+  const urgentTasks = tasks.filter(task => task.priority === 'high' && !task.completed).slice(0, 3)
+
+  const handleToggleTask = async (taskId: number) => {
+    try {
+      await toggleTask(taskId)
+      toast.success('Task status updated!')
+    } catch (error) {
+      console.error('Failed to toggle task:', error)
+      toast.error('Failed to update task status. Please try again.')
+    }
+  }
+
+  const handleDeleteTask = async (taskId: number) => {
+    try {
+      await deleteTask(taskId)
+      toast.success('Task deleted successfully!')
+    } catch (error) {
+      console.error('Failed to delete task:', error)
+      toast.error('Failed to delete task. Please try again.')
+    }
+  }
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="container mx-auto px-4 py-8 space-y-8">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold">Dashboard</h1>
+          <p className="text-muted-foreground">
+            Welcome back! Here's your task overview.
+          </p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <Button asChild size="lg">
+          <Link href="/tasks/new">
+            <Plus className="h-5 w-5 mr-2" />
+            Add Task
+          </Link>
+        </Button>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Tasks</CardTitle>
+            <CheckSquare className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{stats.total}</div>
+            <p className="text-xs text-muted-foreground">
+              {stats.completed} completed
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Pending</CardTitle>
+            <Clock className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{stats.pending}</div>
+            <p className="text-xs text-muted-foreground">
+              Tasks to complete
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">High Priority</CardTitle>
+            <AlertCircle className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{stats.highPriority}</div>
+            <p className="text-xs text-muted-foreground">
+              Urgent tasks
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Categories</CardTitle>
+            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{categories.length}</div>
+            <p className="text-xs text-muted-foreground">
+              Active categories
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid gap-8 lg:grid-cols-2">
+        {/* Recent Tasks */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Tasks</CardTitle>
+            <CardDescription>
+              Your latest tasks and their status
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {isLoadingTasks ? (
+              <div className="space-y-3">
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className="h-12 bg-muted rounded-md animate-pulse" />
+                ))}
+              </div>
+            ) : recentTasks.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                <CheckSquare className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                <p>No tasks yet. Create your first task!</p>
+              </div>
+            ) : (
+              recentTasks.map((task) => (
+                <div
+                  key={`recent-task-${task.id}`}
+                  className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 transition-colors"
+                  // onClick={() => handleToggleTask(task.id)}
+                >
+                  <div className="flex items-center gap-3 flex-1">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      // onClick={(e) => {
+                      //   e.stopPropagation()
+                      //   handleToggleTask(task.id)
+                      // }}
+                      className="p-0 h-auto"
+                    >
+                      <CheckSquare
+                        className={cn(
+                          "h-5 w-5",
+                          task.completed
+                            ? "text-primary fill-current"
+                            : "text-muted-foreground"
+                        )}
+                      />
+                    </Button>
+                    <div className="flex-1">
+                      <p
+                        className={cn(
+                          "font-medium",
+                          task.completed && "line-through text-muted-foreground"
+                        )}
+                      >
+                        {task.title}
+                      </p>
+                      {task.category_name && (
+                        <Badge variant="secondary" className="text-xs">
+                          {task.category_name}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge
+                      variant={
+                        task.priority === "high"
+                          ? "destructive"
+                          : task.priority === "medium"
+                          ? "default"
+                          : "secondary"
+                      }
+                      className="text-xs"
+                    >
+                      {task.priority}
+                    </Badge>
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <EditTaskDialog task={task} />
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+            {recentTasks.length > 0 && (
+              <Button asChild variant="outline" className="w-full">
+                <Link href="/tasks">View All Tasks</Link>
+              </Button>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Urgent Tasks */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Urgent Tasks</CardTitle>
+            <CardDescription>
+              High priority tasks that need attention
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {urgentTasks.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                <AlertCircle className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                <p>No urgent tasks. Great job!</p>
+              </div>
+            ) : (
+              urgentTasks.map((task) => (
+                <div
+                  key={`urgent-task-${task.id}`}
+                  className="flex items-center justify-between p-3 rounded-lg border border-destructive/20 bg-destructive/5 hover:bg-destructive/10 transition-colors"
+                  // onClick={() => handleToggleTask(task.id)}
+                >
+                  <div className="flex items-center gap-3 flex-1">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      // onClick={(e) => {
+                      //   e.stopPropagation()
+                      //   handleToggleTask(task.id)
+                      // }}
+                      className="p-0 h-auto"
+                    >
+                      <CheckSquare className="h-5 w-5 text-muted-foreground" />
+                    </Button>
+                    <div className="flex-1">
+                      <p className="font-medium">{task.title}</p>
+                      {task.dueDate && (
+                        <p className="text-xs text-muted-foreground">
+                          Due: {new Date(task.dueDate).toLocaleDateString()}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="destructive" className="text-xs">
+                      Urgent
+                    </Badge>
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <EditTaskDialog task={task} />
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </CardContent>
+        </Card>
+      </div>
     </div>
-  );
+  )
 }
