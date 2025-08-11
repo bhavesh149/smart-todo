@@ -1,0 +1,39 @@
+# AI Suggestions API Test Commands
+
+# Test 1: Prioritization suggestions
+curl -X POST http://127.0.0.1:8001/api/ai/suggestions/ \
+  -H "Content-Type: application/json" \
+  -d '{"suggestion_type": "prioritization"}'
+
+# Test 2: Categorization suggestions  
+curl -X POST http://127.0.0.1:8001/api/ai/suggestions/ \
+  -H "Content-Type: application/json" \
+  -d '{"suggestion_type": "categorization"}'
+
+# Test 3: Deadline suggestions
+curl -X POST http://127.0.0.1:8001/api/ai/suggestions/ \
+  -H "Content-Type: application/json" \
+  -d '{"suggestion_type": "deadline"}'
+
+# Test 4: Description enhancement
+curl -X POST http://127.0.0.1:8001/api/ai/suggestions/ \
+  -H "Content-Type: application/json" \
+  -d '{"suggestion_type": "enhancement"}'
+
+# Test 5: Create AI-enhanced task
+curl -X POST http://127.0.0.1:8001/api/tasks/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Prepare quarterly report", 
+    "description": "Need to compile Q3 financial data",
+    "priority_score": 5,
+    "enhance_with_ai": true
+  }'
+
+# Test 6: Add context entry (triggers AI analysis)
+curl -X POST http://127.0.0.1:8001/api/context/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "content": "Urgent: Client meeting moved to tomorrow 3 PM - need presentation ready",
+    "source_type": "WhatsApp"
+  }'

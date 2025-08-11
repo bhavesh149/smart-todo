@@ -1,0 +1,177 @@
+[
+  {
+    "model": "tasks.category",
+    "pk": 1,
+    "fields": {
+      "name": "Work",
+      "usage_count": 5
+    }
+  },
+  {
+    "model": "tasks.category",
+    "pk": 2,
+    "fields": {
+      "name": "Personal",
+      "usage_count": 8
+    }
+  },
+  {
+    "model": "tasks.category",
+    "pk": 3,
+    "fields": {
+      "name": "Health",
+      "usage_count": 3
+    }
+  },
+  {
+    "model": "tasks.category",
+    "pk": 4,
+    "fields": {
+      "name": "Learning",
+      "usage_count": 4
+    }
+  },
+  {
+    "model": "tasks.category",
+    "pk": 5,
+    "fields": {
+      "name": "Finance",
+      "usage_count": 2
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 1,
+    "fields": {
+      "title": "Complete project proposal",
+      "description": "Finish the Q1 project proposal document with budget estimates and timeline",
+      "category": 1,
+      "priority_score": 9,
+      "deadline": "2025-08-15T17:00:00Z",
+      "status": "In Progress",
+      "created_at": "2025-08-10T10:00:00Z",
+      "updated_at": "2025-08-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 2,
+    "fields": {
+      "title": "Buy groceries",
+      "description": "Get milk, eggs, bread, and vegetables for the week",
+      "category": 2,
+      "priority_score": 6,
+      "deadline": "2025-08-12T18:00:00Z",
+      "status": "Pending",
+      "created_at": "2025-08-10T09:30:00Z",
+      "updated_at": "2025-08-10T09:30:00Z"
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 3,
+    "fields": {
+      "title": "Schedule dentist appointment",
+      "description": "Book routine dental checkup for next month",
+      "category": 3,
+      "priority_score": 4,
+      "deadline": null,
+      "status": "Pending",
+      "created_at": "2025-08-10T08:15:00Z",
+      "updated_at": "2025-08-10T08:15:00Z"
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 4,
+    "fields": {
+      "title": "Read Python book chapter",
+      "description": "Complete chapter 5 on advanced data structures",
+      "category": 4,
+      "priority_score": 7,
+      "deadline": "2025-08-14T20:00:00Z",
+      "status": "Pending",
+      "created_at": "2025-08-10T07:45:00Z",
+      "updated_at": "2025-08-10T07:45:00Z"
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 5,
+    "fields": {
+      "title": "Review monthly budget",
+      "description": "Check expenses and update budget spreadsheet for August",
+      "category": 5,
+      "priority_score": 5,
+      "deadline": "2025-08-11T23:59:00Z",
+      "status": "Pending",
+      "created_at": "2025-08-10T06:30:00Z",
+      "updated_at": "2025-08-10T06:30:00Z"
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 6,
+    "fields": {
+      "title": "Prepare presentation slides",
+      "description": "Create slides for Monday's team meeting about Q3 goals",
+      "category": 1,
+      "priority_score": 8,
+      "deadline": "2025-08-13T09:00:00Z",
+      "status": "Pending",
+      "created_at": "2025-08-10T11:20:00Z",
+      "updated_at": "2025-08-10T11:20:00Z"
+    }
+  },
+  {
+    "model": "tasks.contextentry",
+    "pk": 1,
+    "fields": {
+      "content": "Hey, don't forget about the client meeting tomorrow at 2 PM. We need to discuss the new requirements.",
+      "source_type": "WhatsApp",
+      "processed_insights": {
+        "keywords": ["client", "meeting", "requirements", "tomorrow"],
+        "urgency_indicators": ["don't forget", "tomorrow"],
+        "sentiment_score": 0.7,
+        "common_themes": ["business", "scheduling"],
+        "time_references": ["tomorrow", "2 PM"],
+        "action_verbs": ["discuss"]
+      },
+      "created_at": "2025-08-10T12:00:00Z"
+    }
+  },
+  {
+    "model": "tasks.contextentry",
+    "pk": 2,
+    "fields": {
+      "content": "Reminder: Your dentist appointment is due for rescheduling. Please call the office at your earliest convenience.",
+      "source_type": "Email",
+      "processed_insights": {
+        "keywords": ["dentist", "appointment", "rescheduling", "call"],
+        "urgency_indicators": ["reminder", "due", "earliest convenience"],
+        "sentiment_score": 0.6,
+        "common_themes": ["health", "appointments"],
+        "time_references": ["due"],
+        "action_verbs": ["call", "rescheduling"]
+      },
+      "created_at": "2025-08-10T11:45:00Z"
+    }
+  },
+  {
+    "model": "tasks.contextentry",
+    "pk": 3,
+    "fields": {
+      "content": "Note to self: Need to finish reading the Python book chapter on data structures before the weekend coding session.",
+      "source_type": "Notes",
+      "processed_insights": {
+        "keywords": ["Python", "book", "data structures", "coding", "weekend"],
+        "urgency_indicators": ["before the weekend"],
+        "sentiment_score": 0.8,
+        "common_themes": ["learning", "programming"],
+        "time_references": ["weekend"],
+        "action_verbs": ["finish", "reading"]
+      },
+      "created_at": "2025-08-10T10:30:00Z"
+    }
+  }
+]
