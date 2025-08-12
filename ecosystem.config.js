@@ -16,8 +16,8 @@ module.exports = {
         
         // Django Configuration
         DEBUG: 'False',
-        SECRET_KEY: 'your-production-secret-key-minimum-50-characters-long-replace-this',
-        ALLOWED_HOSTS: 'your-domain.com,your-ec2-public-ip,localhost,127.0.0.1',
+        SECRET_KEY: 'your-production-secret-key-minimum-50-characters-long-replace-this-434y34y34234y2343',
+        ALLOWED_HOSTS: 'your-domain.com,your-ec2-public-ip,localhost,127.0.0.1,https://smart-todo-2zjg.vercel.app/',
         
         // Neon Database Configuration
         DB_NAME: 'neondb',

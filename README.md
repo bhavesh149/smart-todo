@@ -1,4 +1,16 @@
-# � Smart Todo List - Django REST API Backend
+# 🚀 Smart Todo List - AI-Powered Task Management System
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-http%3A%2F%2F13.61.16.33%2F-blue?style=for-the-badge)](http://13.61.16.33/)
+[![API Documentation](https://img.shields.io/badge/API%20Docs-http%3A%2F%2F13.61.16.33%2Fapi%2F-green?style=for-the-badge)](http://13.61.16.33/api/)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github)](https://github.com/bhavesh149/smart-todo)
+
+A modern, AI-powered task management application built with Django REST Framework and Next.js, featuring intelligent context analysis, smart prioritization, and seamless task organization.
+
+## 🌟 Live Application
+
+- **Frontend**: [http://13.61.16.33/](http://13.61.16.33/)
+- **API Endpoint**: [http://13.61.16.33/api/](http://13.61.16.33/api/)
+- **Admin Panel**: [http://13.61.16.33/admin/](http://13.61.16.33/admin/) Smart Todo List - Django REST API Backend
 
 A production-ready Django REST Framework backend for an intelligent todo list application with AI-powered features using Groq API.
 

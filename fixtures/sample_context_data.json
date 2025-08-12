@@ -1,0 +1,142 @@
+[
+  {
+    "model": "tasks.contextentry",
+    "pk": 1,
+    "fields": {
+      "content": "Hey, can you help me prepare the quarterly review presentation? The board meeting is next Thursday at 10 AM and I need to cover Q3 performance metrics.",
+      "source_type": "WhatsApp",
+      "processed_insights": {
+        "keywords": ["quarterly review", "presentation", "board meeting", "Q3", "performance", "metrics"],
+        "action_verbs": ["prepare", "help", "cover"],
+        "urgency_indicators": ["next Thursday", "10 AM"],
+        "sentiment_score": 0.6,
+        "time_references": ["next Thursday", "10 AM"],
+        "common_themes": ["Business Meeting", "Quarterly Review", "Performance Analysis"],
+        "suggested_tasks": [
+          {
+            "title": "Prepare Q3 Quarterly Review Presentation",
+            "priority_score": 9,
+            "category": "Business",
+            "deadline": "next Thursday 9:00 AM"
+          }
+        ]
+      },
+      "created_at": "2025-08-12T10:00:00Z"
+    }
+  },
+  {
+    "model": "tasks.contextentry",
+    "pk": 2,
+    "fields": {
+      "content": "Subject: Project Deadline Extension Request - The development team needs an additional week to implement the security features properly. Please review the revised timeline.",
+      "source_type": "Email",
+      "processed_insights": {
+        "keywords": ["deadline", "extension", "development", "security", "timeline", "review"],
+        "action_verbs": ["review", "implement"],
+        "urgency_indicators": ["additional week"],
+        "sentiment_score": 0.4,
+        "common_themes": ["Project Management", "Development", "Security"],
+        "suggested_tasks": [
+          {
+            "title": "Review Project Timeline Extension Request",
+            "priority_score": 8,
+            "category": "Project Management"
+          },
+          {
+            "title": "Security Features Implementation Planning",
+            "priority_score": 7,
+            "category": "Development"
+          }
+        ]
+      },
+      "created_at": "2025-08-12T11:30:00Z"
+    }
+  },
+  {
+    "model": "tasks.contextentry",
+    "pk": 3,
+    "fields": {
+      "content": "Team meeting tomorrow at 3 PM to discuss the new product roadmap. Make sure to bring the market research data and competitive analysis reports.",
+      "source_type": "Notes",
+      "processed_insights": {
+        "keywords": ["team meeting", "product roadmap", "market research", "competitive analysis"],
+        "action_verbs": ["discuss", "bring"],
+        "urgency_indicators": ["tomorrow", "3 PM"],
+        "sentiment_score": 0.7,
+        "time_references": ["tomorrow", "3 PM"],
+        "common_themes": ["Product Strategy", "Market Analysis", "Team Collaboration"],
+        "suggested_tasks": [
+          {
+            "title": "Prepare Market Research Data for Product Meeting",
+            "priority_score": 8,
+            "category": "Research"
+          },
+          {
+            "title": "Compile Competitive Analysis Reports",
+            "priority_score": 7,
+            "category": "Analysis"
+          }
+        ]
+      },
+      "created_at": "2025-08-12T12:15:00Z"
+    }
+  },
+  {
+    "model": "tasks.contextentry",
+    "pk": 4,
+    "fields": {
+      "content": "Urgent: Client is asking for demo of the new features by end of this week. The payment gateway integration needs to be ready for testing.",
+      "source_type": "WhatsApp",
+      "processed_insights": {
+        "keywords": ["urgent", "client", "demo", "features", "payment gateway", "integration", "testing"],
+        "action_verbs": ["demo", "integration", "testing"],
+        "urgency_indicators": ["urgent", "end of this week"],
+        "sentiment_score": 0.3,
+        "time_references": ["end of this week"],
+        "common_themes": ["Client Requirements", "Development", "Payment Systems"],
+        "suggested_tasks": [
+          {
+            "title": "Complete Payment Gateway Integration for Demo",
+            "priority_score": 10,
+            "category": "Development"
+          },
+          {
+            "title": "Prepare Client Demo Presentation",
+            "priority_score": 9,
+            "category": "Business"
+          }
+        ]
+      },
+      "created_at": "2025-08-12T13:00:00Z"
+    }
+  },
+  {
+    "model": "tasks.contextentry",
+    "pk": 5,
+    "fields": {
+      "content": "Don't forget to backup the database before the weekend maintenance window. Also, update the documentation for the new API endpoints.",
+      "source_type": "Notes",
+      "processed_insights": {
+        "keywords": ["backup", "database", "weekend", "maintenance", "documentation", "API", "endpoints"],
+        "action_verbs": ["backup", "update"],
+        "urgency_indicators": ["don't forget", "weekend"],
+        "sentiment_score": 0.5,
+        "time_references": ["weekend"],
+        "common_themes": ["System Maintenance", "Documentation", "Database Management"],
+        "suggested_tasks": [
+          {
+            "title": "Database Backup Before Weekend Maintenance",
+            "priority_score": 9,
+            "category": "System Admin"
+          },
+          {
+            "title": "Update API Documentation for New Endpoints",
+            "priority_score": 6,
+            "category": "Documentation"
+          }
+        ]
+      },
+      "created_at": "2025-08-12T14:30:00Z"
+    }
+  }
+]
